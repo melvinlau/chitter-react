@@ -2,25 +2,36 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Feed from './components/feed';
+
+class App extends React.Component {
+
+  state = {
+    feed: []
+  }
+
+  componentDidMount() {
+
+    fetch('https://chitter-backend-api.herokuapp.com/peeps')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({
+          feed: data
+      })
+    })
+    .catch(console.log);
+
+  }
+
+  render() {
+    return (
+
+      <div>
+        <Feed feed={this.state.feed} />
+      </div>
+
+    );
+  }
 }
 
 export default App;
