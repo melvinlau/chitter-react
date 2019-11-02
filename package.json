@@ -1,0 +1,22 @@
+{
+  "name": "chitter-react",
+  "version": "1.0.0",
+  "description": "## About",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melvinlau/chitter-react.git"
+  },
+  "author": "Melvin Lau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melvinlau/chitter-react/issues"
+  },
+  "homepage": "https://github.com/melvinlau/chitter-react#readme",
+  "dependencies": {
+    "create-react-app": "^3.2.0"
+  }
+}
