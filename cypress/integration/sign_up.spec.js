@@ -8,7 +8,7 @@ context('Sign up', () => {
       cy.visit('baseURL');
       cy.get('#sign-up-handle').type('melvin');
       cy.get('#sign-up-password').type('123');
-      cy.get('#sign-up-button').click();
+      cy.get('#sign-up-submit').click();
       cy.get('#user-dashboard').should('contain', 'melvin');
     });
 
