@@ -4,8 +4,20 @@
 
 Chitter is a web app that allows users to register, sign in and post short messages ('peeps') to a public feed. It mimics the basic functionality of Twitter. This version will have an extended functionality: giving users the ability to 'like' peeps.
 
-## (Redefined) User Stories
+## How to run
 
+1. Clone this repo.
+2. Navigate to the `frontend` folder.
+3. Run `npm install`
+4. Run `npm start`
+
+## Tech stack
+React.js
+
+## Work in progress
+This project is very much WIP. At the moment the front-end single page app (SPA) loads the 'peep' feed from the Makers' backend, and that's about it.
+
+## User Stories
 
 ```
 REGISTRATION & AUTHENTICATION
