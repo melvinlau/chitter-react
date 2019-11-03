@@ -18,5 +18,8 @@
   "homepage": "https://github.com/melvinlau/chitter-react#readme",
   "dependencies": {
     "create-react-app": "^3.2.0"
+  },
+  "devDependencies": {
+    "cypress": "^3.6.0"
   }
 }
