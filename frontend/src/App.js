@@ -33,7 +33,7 @@ class App extends React.Component {
   // Fetches the FEED using the Makers backend API
   getFeed() {
     fetch('https://chitter-backend-api.herokuapp.com/peeps')
-    .then(response => response.json())
+    .then((response) => { return response.json() })
     .then((data) => {
       this.setState({
           feed: data
