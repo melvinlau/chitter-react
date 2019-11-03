@@ -9,22 +9,33 @@ class SignUpForm extends React.Component {
       handle: null,
       password: null
     }
-    this.handleHandleChange = this.handleHandleChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleHandleChange(event) {
-    this.setState({ handle: event.target.value });
-  }
-
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value });
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
-    alert('New user creation request: ' + this.state.handle + this.state.password);
     event.preventDefault();
+    let postData = `{"user": {"handle": "${this.state.handle}", "password": "${this.state.password}"}}`
+    console.log(postData)
+    fetch(
+      'https://chitter-backend-api.herokuapp.com/users',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(postData)
+      }
+    ).then((response) => response.json())
+    .then((data) => {
+      alert(data.id + data.handle)
+    })
+    .catch(console.log)
   }
 
   render() {
@@ -34,15 +45,17 @@ class SignUpForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input
             value={this.state.handle}
-            onChange={this.handleHandleChange}
+            onChange={this.handleChange}
             type="text"
+            name="handle"
             placeholder="Username"
             required
           />
           <br />
           <PasswordMask
             value={this.state.password}
-            onChange={this.handlePasswordChange}
+            onChange={this.handleChange}
+            name="password"
             placeholder="Password"
             required
           />
