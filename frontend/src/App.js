@@ -1,27 +1,49 @@
 import React from 'react'
+
 import logo from './logo.svg'
 import './App.css'
 
 import Heading from './components/heading'
-import Sidebar from './components/sidebar'
 import Feed from './components/feed'
+import Sidebar from './components/sidebar'
 
 class App extends React.Component {
 
-  state = {
-    feed: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      feed: [],
+      isLoggedin: false,
+      user: {
+        id: null,
+        handle: null
+      },
+      session_key: null
+    }
   }
 
-  componentDidMount() {
+  handleSignUp(handle, password) {
+    // Post API here
+  }
 
+  handleSignIn(handle, password) {
+    // Post API here
+  }
+
+  // Fetches the FEED using the Makers backend API
+  getFeed() {
     fetch('https://chitter-backend-api.herokuapp.com/peeps')
-    .then(res => res.json())
+    .then(response => response.json())
     .then((data) => {
       this.setState({
           feed: data
       })
     })
     .catch(console.log);
+  }
+
+  componentDidMount() {
+    this.getFeed()
 
   }
 
@@ -35,7 +57,7 @@ class App extends React.Component {
             <Feed feed={this.state.feed} />
           </div>
           <div className="col-4 pr-3 py-2">
-            <Sidebar />
+            <Sidebar isLoggedIn={this.state.isLoggedIn} />
           </div>
         </div>
       </div>
