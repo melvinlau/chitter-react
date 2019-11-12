@@ -18,17 +18,88 @@ class App extends React.Component {
         id: null,
         handle: null
       },
-      session_key: null
+      session: {
+        user_id: null,
+        session_key: null
+      }
     }
+    // Function bindings
+    this.handleSignUp = this.handleSignUp.bind(this)
+    this.handleSignIn = this.handleSignIn.bind(this)
+    this.handleCreatePost = this.handleCreatePost.bind(this)
   }
 
   handleSignUp(handle, password) {
-    // Post API here
+    let signUpData = {
+      'user': {
+        'handle': handle,
+        'password': password
+      }
+    }
+    fetch(
+      'https://chitter-backend-api.herokuapp.com/users',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(signUpData)
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        user: {
+          id: data.id,
+          handle: data.handle
+        }
+      })
+    })
+    .then(
+      this.handleSignIn(handle, password)
+    )
+    .catch(console.log)
   }
 
   handleSignIn(handle, password) {
-    // Post API here
+    let signInData = {
+      'session': {
+        'handle': handle,
+        'password': password
+      }
+    }
+    fetch(
+      'https://chitter-backend-api.herokuapp.com/sessions',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(signInData)
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        isLoggedIn: true,
+        session: {
+          user_id: data.user_id,
+          session_key: data.session_key
+        }
+      })
+    })
+    .catch(console.log)
   }
+
+
+  handleCreatePost() {
+
+
+
+  }
+
 
   // Fetches the FEED using the Makers backend API
   getFeed() {
@@ -39,17 +110,15 @@ class App extends React.Component {
           feed: data
       })
     })
-    .catch(console.log);
+    .catch(console.log)
   }
 
   componentDidMount() {
     this.getFeed()
-
   }
 
   render() {
     return (
-
       <div className="container">
         <Heading />
         <div className="row">
@@ -57,12 +126,15 @@ class App extends React.Component {
             <Feed feed={this.state.feed} />
           </div>
           <div className="col-4 pr-3 py-2">
-            <Sidebar isLoggedIn={this.state.isLoggedIn} />
+            <Sidebar
+              isLoggedIn={this.state.isLoggedIn}
+              handleSignUp={this.handleSignUp}
+              handleSignIn={this.handleSignIn}
+            />
           </div>
         </div>
       </div>
-
-    );
+    )
   }
 }
 
