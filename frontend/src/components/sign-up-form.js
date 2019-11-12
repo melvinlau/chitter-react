@@ -18,30 +18,14 @@ class SignUpForm extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    let postData = `{"user": {"handle": "${this.state.handle}", "password": "${this.state.password}"}}`
-    console.log(postData)
-    fetch(
-      'https://chitter-backend-api.herokuapp.com/users',
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(postData)
-      }
-    ).then((response) => response.json())
-    .then((data) => {
-      alert(data.id + data.handle)
-    })
-    .catch(console.log)
+    event.preventDefault()
+    this.props.handleSignUp(this.state.handle, this.state.password)
   }
 
   render() {
     return (
       <div className="sign-up">
-        <h5 class="mb-3">Create a new account</h5>
+        <h5 className="mb-3">Create a new account</h5>
         <form onSubmit={this.handleSubmit}>
           <input
             value={this.state.handle}
@@ -59,7 +43,6 @@ class SignUpForm extends React.Component {
             placeholder="Password"
             required
           />
-
           <button id="sign-up-submit" className="btn btn-dark">Sign Up</button>
         </form>
       </div>

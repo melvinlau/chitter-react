@@ -5,7 +5,7 @@ const Feed = ({ feed }) => {
     <div>
       {feed.map((peep) => (
 
-        <div className="peep m-3 p-4" id={peep.id}>
+        <div className="peep m-3 p-4" key={peep.id}>
           <div className="author mb-2">
             <strong>{peep.user.handle}</strong>
             <span className="handle ml-2">@{peep.user.handle}</span>

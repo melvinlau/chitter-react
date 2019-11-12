@@ -3,6 +3,7 @@ import React from 'react'
 import SignUpForm from './sign-up-form'
 import SignInForm from './sign-in-form'
 import Dashboard from './dashboard'
+import CreatePostForm from './create-post-form'
 
 class Sidebar extends React.Component {
 
@@ -16,13 +17,26 @@ class Sidebar extends React.Component {
 
   render() {
 
-    return (
-      <div>
-        <SignUpForm />
-        <br />
-        <SignInForm />
-      </div>
-    )
+    if (this.props.isLoggedIn) {
+      return (
+        <div>
+          <CreatePostForm />
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <SignUpForm
+            handleSignUp={this.props.handleSignUp}
+          />
+          <br />
+          <SignInForm
+            handleSignIn={this.props.handleSignIn}
+          />
+        </div>
+      )
+    }
+
   }
 
 }
