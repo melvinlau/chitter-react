@@ -8,11 +8,7 @@ import CreatePostForm from './create-post-form'
 class Sidebar extends React.Component {
 
   constructor(props) {
-    // Inherits the props defined by the App when App renders a Sidebar
     super(props)
-    this.state = {
-      isLoggedin: props.isLoggedIn
-    }
   }
 
   render() {
@@ -20,7 +16,8 @@ class Sidebar extends React.Component {
     if (this.props.isLoggedIn) {
       return (
         <div>
-          <CreatePostForm />
+          <Dashboard handle={this.props.handle} />
+          <CreatePostForm handleCreatePost={this.props.handleCreatePost} />
         </div>
       )
     } else {
