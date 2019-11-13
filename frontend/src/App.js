@@ -28,6 +28,7 @@ class App extends React.Component {
     this.handleSignUp = this.handleSignUp.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleCreatePost = this.handleCreatePost.bind(this)
+    this.handleDeletePost = this.handleDeletePost.bind(this)
   }
 
   handleSignUp(handle, password) {
@@ -107,8 +108,6 @@ class App extends React.Component {
         'body': message
       }
     }
-    console.log(this.state.session.session_key)
-    console.log({'Authorization': `Token token=${this.state.session.session_key}`})
     fetch(
       'https://chitter-backend-api.herokuapp.com/peeps',
       {
@@ -120,12 +119,21 @@ class App extends React.Component {
         body: JSON.stringify(createPostData)
       }
     )
-    .then(response => response.json())
     .then(this.getFeed())
     .catch(console.log)
   }
 
-  // Fetches the FEED using the Makers backend API
+  handleDeletePost(id, token) {
+    fetch(
+      `https://chitter-backend-api.herokuapp.com/peeps/${id}`,
+      {
+        headers: { 'Authorization': `Token token=${token}` },
+        method: 'DELETE'
+      }
+    )
+    .then(this.getFeed())
+  }
+
   getFeed() {
     fetch('https://chitter-backend-api.herokuapp.com/peeps')
     .then((response) => { return response.json() })
@@ -147,7 +155,11 @@ class App extends React.Component {
         <Heading />
         <div className="row">
           <div className="col-8 pl-3 py-2">
-            <Feed feed={this.state.feed} />
+            <Feed
+              feed={this.state.feed}
+              token={this.state.session.session_key}
+              handleDeletePost={this.handleDeletePost}
+            />
           </div>
           <div className="col-4 pr-3 py-2">
             <Sidebar
