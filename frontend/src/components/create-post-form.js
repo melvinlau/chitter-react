@@ -5,7 +5,7 @@ class CreatePostForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      message: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,19 +17,19 @@ class CreatePostForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.handleCreatePost(this.state.handle, this.state.password)
+    this.props.handleCreatePost(this.state.message)
   }
 
   render() {
     return (
       <div className="create-post mt-5">
-        <div class="mb-3"><strong>Post a new peep:</strong></div>
+        <div className="mb-3"><strong>Post a new peep:</strong></div>
         <form onSubmit={this.handleSubmit}>
           <textarea
-            value={this.state.handle}
+            value={this.state.message}
             onChange={this.handleChange}
             rows="6"
-            maxlength="280"
+            maxLength="280"
             name="message"
             placeholder="What are you up to?"
             required >
