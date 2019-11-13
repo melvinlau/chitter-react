@@ -24,6 +24,7 @@ class App extends React.Component {
       }
     }
     // Function bindings
+    this.getFeed = this.getFeed.bind(this)
     this.handleSignUp = this.handleSignUp.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleCreatePost = this.handleCreatePost.bind(this)
@@ -82,20 +83,22 @@ class App extends React.Component {
     )
     .then(response => response.json())
     .then(data => {
-      this.setState({
-        isLoggedIn: true,
-        user: {
-          handle: handle
-        },
-        session: {
-          user_id: data.user_id,
-          session_key: data.session_key
-        }
-      })
+      console.log(data)
+      if (data.session_key) {
+        this.setState({
+          isLoggedIn: true,
+          user: {
+            handle: handle
+          },
+          session: {
+            user_id: data.user_id,
+            session_key: data.session_key
+          }
+        })
+      }
     })
     .catch(console.log)
   }
-
 
   handleCreatePost(message) {
     let createPostData = {
@@ -104,6 +107,8 @@ class App extends React.Component {
         'body': message
       }
     }
+    console.log(this.state.session.session_key)
+    console.log({'Authorization': `Token token=${this.state.session.session_key}`})
     fetch(
       'https://chitter-backend-api.herokuapp.com/peeps',
       {
@@ -116,14 +121,9 @@ class App extends React.Component {
       }
     )
     .then(response => response.json())
-    .then(data => {
-      this.setState({
-        feed: this.state.feed << data
-      })
-    })
+    .then(this.getFeed())
     .catch(console.log)
   }
-
 
   // Fetches the FEED using the Makers backend API
   getFeed() {
